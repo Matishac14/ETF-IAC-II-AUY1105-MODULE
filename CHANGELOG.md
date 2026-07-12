@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/compare/v0.1.1...v0.2.0) (2026-07-12)
+
+
+### Features
+
+* agregar comentario de ejemplo en main.tf.example para mayor claridad ([96cd39e](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/commit/96cd39e60fbdf8f4f97ad635d989395e0a514028))
+* agregar ejemplos de Terraform para VPC, EC2 y S3 con configuraciones de seguridad y outputs y documentación completa de repo ([9f28436](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/commit/9f28436ab9691e89b854e1ad3dc180e121034982))
+* renombrar ejemplos a .tf.example para excluirlos del análisis estático ([fa5d150](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/commit/fa5d1507ee07c12259e2f497312add0f3820ad9d))
+
+
+### Bug Fixes
+
+* suprimir alertas checkov en la configuración del bucket S3 para evitar costos innecesarios ([b50bafc](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/commit/b50bafcd4caa5f3846230698c8ccea4f301dc9f9))
+
 ## [0.1.1](https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE/compare/v0.1.0...v0.1.1) (2026-07-12)
 
 
