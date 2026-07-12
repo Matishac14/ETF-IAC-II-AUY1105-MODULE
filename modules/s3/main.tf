@@ -40,16 +40,21 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   }
 }
 
-# Política de Ciclo de Vida (FinOps - Checkov CKV2_AWS_61)
+# Política de Ciclo de Vida (FinOps - Checkov CKV2_AWS_61 y CKV_AWS_300)
 resource "aws_s3_bucket_lifecycle_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 
   rule {
-    id     = "auto-delete-old-versions"
+    id     = "auto-delete-old-versions-and-failed-uploads"
     status = "Enabled"
 
     noncurrent_version_expiration {
       noncurrent_days = 7
+    }
+
+    # CKV_AWS_300: Limpieza de subidas multiparte fallidas para evitar costos ocultos
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
     }
   }
 }
