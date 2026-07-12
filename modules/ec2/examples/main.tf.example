@@ -13,8 +13,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# La VPC y el SG se crean antes para proveer subnet_id y security_group_ids al módulo ec2.
-# En producción estos valores vendrían de outputs del módulo vpc.
 module "vpc" {
   source = "git::https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE.git//modules/vpc?ref=v0.1.1"
 
@@ -28,10 +26,10 @@ resource "aws_security_group" "ssm_sg" {
   vpc_id      = module.vpc.vpc_id
 
   egress {
-    description = "Permitir todo el tráfico saliente para SSM y parches."
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    description = "HTTPS saliente requerido por SSM Session Manager y Systems Manager endpoints."
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
