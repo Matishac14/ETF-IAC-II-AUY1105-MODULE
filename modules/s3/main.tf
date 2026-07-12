@@ -1,4 +1,7 @@
 #Creación del bucket S3 con nombre único global.
+# checkov:skip=CKV_AWS_18: Se omite Access Logging para evitar costos de almacenamiento doble en el laboratorio.
+# checkov:skip=CKV_AWS_144: Se omite Cross-Region Replication para evitar costos de transferencia de datos.
+#checkov:skip=CKV2_AWS_62: No se requiere enrutamiento de notificaciones (EventBridge/SNS) en esta arquitectura.
 resource "aws_s3_bucket" "this" {
   bucket = "${var.project_name}-${var.environment}-${var.bucket_name}"
 
@@ -27,6 +30,7 @@ resource "aws_s3_bucket_versioning" "this" {
 }
 
 #Cifrado en reposo por default.
+# checkov:skip=CKV_AWS_61:Se omite el uso de KMS para cifrado en reposo por simplicidad.
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 
