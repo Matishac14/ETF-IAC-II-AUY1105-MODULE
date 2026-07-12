@@ -33,3 +33,9 @@ variable "instance_type" {
     error_message = "Solo se permiten tipos de instancia t2.nano, t2.micro, t2.small, t2.medium y t2.large."
   }
 }
+
+variable "tags" {
+  description = "Mapa de etiquetas para los recursos."
+  type        = map(string)
+  default     = {}
+}
