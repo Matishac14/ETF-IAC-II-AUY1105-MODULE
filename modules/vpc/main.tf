@@ -4,6 +4,7 @@ data "aws_availability_zones" "available" {
 
 #Creación de la VPC
 resource "aws_vpc" "this" {
+  # checkov:skip=CKV2_AWS_11:Se omite habilitar VPC Flow Logs debido a las limitaciones de costo en el entorno Learner Labs.
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -12,6 +13,9 @@ resource "aws_vpc" "this" {
     Name        = "${var.project_name}-${var.environment}-vpc"
     Environment = var.environment
   })
+}
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.this.id
 }
 
 #Creación de Internet Gateway para trafico saliente de subnet públicas
@@ -26,6 +30,7 @@ resource "aws_internet_gateway" "this" {
 
 #Creación de Subredes Públicas
 resource "aws_subnet" "public" {
+  # checkov:skip=CKV_AWS_130:Es una subred pública por diseño, por lo tanto, es necesario map_public_ip_on_launch = true
   count      = length(var.public_subnet_cidrs)
   vpc_id     = aws_vpc.this.id
   cidr_block = var.public_subnet_cidrs[count.index]
@@ -58,6 +63,10 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
   }
+  tags = merge(var.tags, {
+    Name        = "${var.project_name}-${var.environment}-public-rt"
+    Environment = var.environment
+  })
 }
 
 resource "aws_route_table_association" "public" {
