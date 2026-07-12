@@ -8,6 +8,8 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_instance" "this" {
+  # checkov:skip=CKV_AWS_135:Las instancias de la familia t2 (ej. t2.micro) no soportan ebs_optimized.
+  # checkov:skip=CKV_AWS_126:Se omite monitorización detallada para evitar cargos en CloudWatch.
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
