@@ -1,0 +1,37 @@
+terraform {
+  required_version = ">= 1.5.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 6.0, < 7.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+module "s3" {
+  source = "git::https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE.git//modules/s3?ref=v0.1.1"
+
+  project_name = "etf-auy1105"
+  environment  = "dev"
+  bucket_name  = "artifacts"
+
+  tags = {
+    Owner     = "matias.fernandez"
+    Terraform = "true"
+  }
+}
+
+output "bucket_id" {
+  description = "Nombre del bucket S3 creado."
+  value       = module.s3.bucket_id
+}
+
+output "bucket_arn" {
+  description = "ARN del bucket S3 creado."
+  value       = module.s3.bucket_arn
+}

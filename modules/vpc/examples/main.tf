@@ -1,0 +1,44 @@
+terraform {
+  required_version = ">= 1.5.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 6.0, < 7.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+module "vpc" {
+  source = "git::https://github.com/Matishac14/ETF-IAC-II-AUY1105-MODULE.git//modules/vpc?ref=v0.1.1"
+
+  project_name         = "etf-auy1105"
+  environment          = "dev"
+  vpc_cidr             = "10.1.0.0/16"
+  public_subnet_cidrs  = ["10.1.10.0/24", "10.1.11.0/24"]
+  private_subnet_cidrs = ["10.1.20.0/24", "10.1.21.0/24"]
+
+  tags = {
+    Owner     = "matias.fernandez"
+    Terraform = "true"
+  }
+}
+
+output "vpc_id" {
+  description = "ID de la VPC creada."
+  value       = module.vpc.vpc_id
+}
+
+output "public_subnet_ids" {
+  description = "IDs de las subnets públicas."
+  value       = module.vpc.public_subnet_ids
+}
+
+output "private_subnet_ids" {
+  description = "IDs de las subnets privadas."
+  value       = module.vpc.private_subnet_ids
+}
