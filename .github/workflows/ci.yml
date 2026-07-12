@@ -1,0 +1,36 @@
+name : Terraform CI/CD Modules
+
+on:
+  pull_request:
+    branches:
+      - main # Trigger en pull requests a la rama main
+
+jobs:
+  validate_and_test:
+    name: Validación y pruebas de Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+            terraform_version: "1.5.0"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive # Bloqueo de PR si falla sintaxis de Terraform
+
+      - name: Terraform Init
+        run: terraform init -backend=false -input=false # Inicialización de Terraform sin backend
+
+      - name: Instalar TFLint
+        uses: terraform-linters/setup-tflint@v3
+      - run: tflint -f compact
+
+      - name: Checkov SAST
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./modules # Directorio de módulos a analizar
+          framework: terraform # Framework a utilizar
+          output_format: cli
