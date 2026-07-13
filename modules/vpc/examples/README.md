@@ -115,4 +115,4 @@ output "private_subnets" { value = module.vpc.private_subnet_ids }
 | Check          | Razón |
 |----------------|-------|
 | `CKV2_AWS_11`  | VPC Flow Logs omitido para evitar costos en AWS Academy Learner Labs. |
-| `CKV_AWS_130`  | Subnets públicas requieren `map_public_ip_on_launch = true` por diseño. |
+| `CKV_AWS_130`  | Subnets públicas requieren `map_public_ip_on_launch = true` por diseño. | 
