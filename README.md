@@ -128,3 +128,7 @@ Cada PR ejecuta el workflow `ci.yml` que valida:
 
 - Limpieza de Subidas Incompletas (FinOps): CKV_AWS_300 
   - Referencia: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/bc-aws-300
+
+# Referencia repos originales con validaciones de PR manuales
+- Modulo Orquestador EV1 y EV2: https://github.com/AUY1105-II/Modulos-AUY1105-Grupo-4
+- Modulo Orquestador EV3: https://github.com/Matishac14/Modulos-AUY1105-EV3
